@@ -14,12 +14,12 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class HandleIntegrationTest {
     
-    private KernelHandle kernelHandle;
+    private HandleKernel kernelHandle;
     private ObjectMapper objectMapper;
     
     @BeforeEach
     void setUp() {
-        kernelHandle = new KernelHandle();
+        kernelHandle = new HandleKernel();
         objectMapper = new ObjectMapper();
     }
     

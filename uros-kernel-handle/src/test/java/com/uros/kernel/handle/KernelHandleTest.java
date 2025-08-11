@@ -8,16 +8,16 @@ import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * KernelHandle类的测试类
+ * HandleKernel类的测试类（兼容旧名 KernelHandle 的测试入口）
  */
 public class KernelHandleTest {
     
-    private KernelHandle kernelHandle;
+    private HandleKernel kernelHandle;
     private ObjectMapper objectMapper;
     
     @BeforeEach
     void setUp() {
-        kernelHandle = new KernelHandle();
+        kernelHandle = new HandleKernel();
         objectMapper = new ObjectMapper();
     }
     

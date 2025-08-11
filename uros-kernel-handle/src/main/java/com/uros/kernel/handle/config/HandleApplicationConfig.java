@@ -1,6 +1,6 @@
 package com.uros.kernel.handle.config;
 
-import com.uros.kernel.handle.KernelHandle;
+import com.uros.kernel.handle.HandleKernel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,10 +11,10 @@ import org.springframework.context.annotation.Configuration;
 public class HandleApplicationConfig {
     
     /**
-     * 配置 KernelHandle Bean
+     * 配置 HandleKernel Bean
      */
     @Bean
-    public KernelHandle kernelHandle() {
-        return new KernelHandle();
+    public HandleKernel kernelHandle() {
+        return new HandleKernel();
     }
 }

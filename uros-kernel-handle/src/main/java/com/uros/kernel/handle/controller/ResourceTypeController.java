@@ -1,6 +1,6 @@
 package com.uros.kernel.handle.controller;
 
-import com.uros.kernel.handle.KernelHandle;
+import com.uros.kernel.handle.HandleKernel;
 import com.uros.kernel.handle.ResourceType;
 import com.uros.kernel.handle.dto.ApiResponse;
 import com.uros.kernel.handle.dto.ResourceTypeRequest;
@@ -21,10 +21,10 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class ResourceTypeController {
     
-    private final KernelHandle kernelHandle;
+    private final HandleKernel kernelHandle;
     
     @Autowired
-    public ResourceTypeController(KernelHandle kernelHandle) {
+    public ResourceTypeController(HandleKernel kernelHandle) {
         this.kernelHandle = kernelHandle;
     }
     

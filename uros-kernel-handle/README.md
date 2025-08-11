@@ -22,7 +22,7 @@
 ## 架构设计
 
 ```
-KernelHandle (主服务)
+HandleKernel (主服务)
 ├── ResourceTypeRegistry (资源类型注册)
 ├── ResourceInstanceManager (资源实例管理)
 └── ResourceResolver (核心资源解析)
@@ -40,12 +40,12 @@ KernelHandle (主服务)
 ### 基本使用
 
 ```java
-import com.uros.kernel.handle.KernelHandle;
+import com.uros.kernel.handle.HandleKernel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 // 创建处理器
-KernelHandle handle = new KernelHandle();
+HandleKernel handle = new HandleKernel();
 ObjectMapper mapper = new ObjectMapper();
 
 // 注册资源类型
@@ -108,7 +108,7 @@ mvn package
 uros-kernel-handle/
 ├── src/
 │   ├── main/java/com/uros/kernel/handle/
-│   │   ├── KernelHandle.java          # 主服务类
+│   │   ├── HandleKernel.java          # 主服务类（原 KernelHandle）
 │   │   ├── ResourceType.java          # 资源类型定义
 │   │   ├── ResourceInstance.java      # 资源实例
 │   │   ├── ResourceTypeRegistry.java  # 资源类型注册服务
@@ -118,7 +118,7 @@ uros-kernel-handle/
 │   │   ├── ValidationResult.java      # 验证结果
 │   │   └── CompleteResourceInfo.java  # 完整资源信息
 │   └── test/java/com/uros/kernel/handle/
-│       └── KernelHandleTest.java      # 测试类
+│       └── KernelHandleTest.java      # 测试类（保留名称以兼容）
 ├── pom.xml
 └── README.md
 ```
