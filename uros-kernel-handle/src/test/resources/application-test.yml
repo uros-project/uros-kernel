@@ -1,0 +1,31 @@
+# 测试环境配置
+spring:
+  profiles:
+    active: test
+  
+  # 测试时使用内存数据库或禁用某些功能
+  main:
+    banner-mode: off
+
+# 测试特定配置
+test:
+  # 测试数据配置
+  data:
+    cleanup: true
+    sample:
+      enabled: true
+      count: 10
+  
+  # 性能测试配置
+  performance:
+    timeout: 5000
+    max-threads: 20
+
+# 日志配置（测试时减少日志输出）
+logging:
+  level:
+    com.uros.kernel.handle: INFO
+    org.springframework.web: WARN
+    org.springframework.boot: WARN
+  pattern:
+    console: "%d{HH:mm:ss} %-5level %logger{36} - %msg%n"
