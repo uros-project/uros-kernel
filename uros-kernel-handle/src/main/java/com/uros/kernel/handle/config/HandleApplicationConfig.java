@@ -1,20 +1,7 @@
 package com.uros.kernel.handle.config;
 
-import com.uros.kernel.handle.HandleKernel;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 /**
- * Handle 应用配置类
+ * 迁移后不再需要显式配置 HandleKernel Bean。
+ * 如后续需要其他 Bean，可在此处新增配置类。
  */
-@Configuration
-public class HandleApplicationConfig {
-    
-    /**
-     * 配置 HandleKernel Bean
-     */
-    @Bean
-    public HandleKernel kernelHandle() {
-        return new HandleKernel();
-    }
-}
+public class HandleApplicationConfig {}

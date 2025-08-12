@@ -62,6 +62,17 @@ ResourceInstance user = handle.createResourceInstance("User", userData);
 ResourceResolutionResult result = handle.resolveResource(user.getId());
 ```
 
+### 启动应用
+
+该模块现在以 `HandleKernel` 作为 Spring Boot 启动入口：
+
+```bash
+# 在模块目录运行
+mvn spring-boot:run -pl uros-kernel-handle -am
+
+# 或者直接运行主类（IDE中运行 HandleKernel.main）
+```
+
 ### 资源类型管理
 
 ```java
@@ -108,7 +119,7 @@ mvn package
 uros-kernel-handle/
 ├── src/
 │   ├── main/java/com/uros/kernel/handle/
-│   │   ├── HandleKernel.java          # 主服务类（原 KernelHandle）
+│   │   ├── HandleKernel.java          # 主服务类 & SpringBootApplication（原 KernelHandle）
 │   │   ├── ResourceType.java          # 资源类型定义
 │   │   ├── ResourceInstance.java      # 资源实例
 │   │   ├── ResourceTypeRegistry.java  # 资源类型注册服务

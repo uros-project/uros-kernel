@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "温度传感器",
+  "description": "描述一个温度传感器，包括温度值读数和开关接口",
+  "$defs": {
+    "telemetryData": {
+      "type": "object",
+      "description": "温度遥测数据（时序数据）",
+      "properties": {
+        "current": {
+          "type": "number",
+          "description": "当前温度读数（摄氏度）",
+          "minimum": -50,
+          "maximum": 150
+        },
+        "timestamp": {
+          "type": "integer",
+          "description": "当前读数的时间戳（Unix时间戳，毫秒）"
+        },
+        "history": {
+          "type": "array",
+          "description": "历史温度数据记录",
+          "items": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number",
+                "description": "温度读数（摄氏度）"
+              },
+              "timestamp": {
+                "type": "integer",
+                "description": "读数时间戳（Unix时间戳，毫秒）"
+              }
+            },
+            "required": ["value", "timestamp"]
+          },
+          "maxItems": 100
+        },
+        "statistics": {
+          "type": "object",
+          "description": "温度数据统计信息",
+          "properties": {
+            "min": {
+              "type": "number",
+              "description": "最低温度（过去24小时）"
+            },
+            "max": {
+              "type": "number",
+              "description": "最高温度（过去24小时）"
+            },
+            "average": {
+              "type": "number",
+              "description": "平均温度（过去24小时）"
+            },
+            "trend": {
+              "type": "string",
+              "description": "温度变化趋势",
+              "enum": ["rising", "falling", "stable"]
+            }
+          }
+        },
+        "unit": {
+          "type": "string",
+          "description": "温度单位",
+          "enum": ["celsius", "fahrenheit", "kelvin"],
+          "default": "celsius"
+        },
+        "samplingRate": {
+          "type": "integer",
+          "description": "采样频率（毫秒）",
+          "minimum": 1000,
+          "default": 60000
+        }
+      },
+      "required": ["current", "timestamp"]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "传感器唯一标识符"
+    },
+    "name": {
+      "type": "string",
+      "description": "传感器名称"
+    },
+    "telemetry": {
+      "$ref": "#/$defs/telemetryData"
+    },
+    "status": {
+      "type": "string",
+      "description": "传感器状态",
+      "enum": ["on", "off", "error"],
+      "default": "off"
+    },
+    "powerSwitch": {
+      "type": "boolean",
+      "description": "电源开关状态，true表示开启，false表示关闭",
+      "default": false
+    },
+    "lastUpdated": {
+      "type": "integer",
+      "description": "最后更新时间（Unix时间戳，毫秒）"
+    },
+    "location": {
+      "type": "object",
+      "description": "传感器安装位置",
+      "properties": {
+        "room": {
+          "type": "string",
+          "description": "房间名称"
+        },
+        "position": {
+          "type": "string",
+          "description": "具体位置描述"
+        }
+      }
+    },
+    "alarmThresholds": {
+      "type": "object",
+      "description": "温度报警阈值设置",
+      "properties": {
+        "high": {
+          "type": "number",
+          "description": "高温报警阈值",
+          "default": 40
+        },
+        "low": {
+          "type": "number",
+          "description": "低温报警阈值",
+          "default": 0
+        }
+      }
+    }
+  },
+  "required": ["id", "name", "telemetry", "status", "powerSwitch"],
+  "additionalProperties": false
+}

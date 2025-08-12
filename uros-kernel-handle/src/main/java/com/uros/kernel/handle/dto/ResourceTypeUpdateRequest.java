@@ -2,25 +2,33 @@ package com.uros.kernel.handle.dto;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-/**
- * 资源类型更新请求DTO
- */
+/** 资源类型更新请求DTO */
 public class ResourceTypeUpdateRequest {
-    
-    private String description;
-    private JsonNode schema;
-    
-    public ResourceTypeUpdateRequest() {}
-    
-    public ResourceTypeUpdateRequest(String description, JsonNode schema) {
-        this.description = description;
-        this.schema = schema;
-    }
-    
-    // Getters and Setters
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-    
-    public JsonNode getSchema() { return schema; }
-    public void setSchema(JsonNode schema) { this.schema = schema; }
+
+  private String description;
+  private JsonNode schema;
+
+  public ResourceTypeUpdateRequest() {}
+
+  public ResourceTypeUpdateRequest(String description, JsonNode schema) {
+    this.description = description;
+    this.schema = schema;
+  }
+
+  // Getters and Setters
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public JsonNode getSchema() {
+    return schema;
+  }
+
+  public void setSchema(JsonNode schema) {
+    this.schema = schema;
+  }
 }
