@@ -19,9 +19,9 @@
     </parent>
 
     <modules>
-        <module>uros-kernel-base</module>
-        <module>uros-kernel-handle</module>
-        <module>uros-kernel-telemetry</module>
+        <module>uros-base</module>
+        <module>uros-handle</module>
+        <module>uros-handle-telemetry</module>
     </modules>
 
     <properties>
