@@ -1,0 +1,39 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /binder
+
+spring:
+  application:
+    name: uros-binder
+  
+  jackson:
+    default-property-inclusion: NON_NULL
+    serialization:
+      write-dates-as-timestamps: false
+    deserialization:
+      fail-on-unknown-properties: false
+
+logging:
+  level:
+    com.uros.kernel.binder: DEBUG
+    org.springframework.web: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# 自定义配置
+binder:
+  id: "binder-app-001"  # Binder应用实例的唯一标识符
+  api:
+    base-path: /api
+    version: v1
+    cors:
+      allowed-origins: "*"
+      allowed-methods: "GET,POST,PUT,DELETE,OPTIONS"
+      allowed-headers: "*"
+  
+  # 绑定相关配置
+  binding:
+    max-bindings-per-resource: 100
+    auto-cleanup-expired: true
+    cleanup-interval: 3600  # 秒

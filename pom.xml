@@ -22,6 +22,7 @@
         <module>uros-base</module>
         <module>uros-handle</module>
         <module>uros-handle-telemetry</module>
+        <module>uros-binder</module>
     </modules>
 
     <properties>
