@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uros.kernel.com/schemas/resolvable.schema.json",
+  "title": "Resolvable Schema",
+  "description": "Schema for UROS Resolvable objects with common type definitions",
+  "type": "object",
+  "$defs": {
+    "uid": {
+      "type": "string",
+      "description": "Unique identifier type - a string-based wrapper for resource IDs",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]$|^[a-zA-Z0-9]$",
+      "minLength": 1,
+      "maxLength": 255,
+      "examples": [
+        "resource-001",
+        "handle-app-001",
+        "temp-sensor-01",
+        "binding-12345"
+      ]
+    }
+  }
+}

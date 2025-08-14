@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://uros.kernel.com/schemas/telemetry.schema.json",
+  "title": "遥测数据",
+  "description": "描述UROS系统中的遥测数据结构",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "../../../uros-handle/src/main/resources/schemas/resolvable.schema.json#/$defs/uid",
+      "description": "遥测数据唯一标识符"
+    },
+    "source": {
+      "$ref": "../../../uros-handle/src/main/resources/schemas/resolvable.schema.json#/$defs/uid",
+      "description": "数据源标识符"
+    },
+    "name": {
+      "type": "string",
+      "description": "遥测数据名称",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "dataType": {
+      "type": "object",
+      "description": "数据类型定义",
+      "oneOf": [
+        {
+          "type": "object",
+          "description": "数值型数据",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "numeric"
+            },
+            "unit": {
+              "type": "string",
+              "description": "量纲单位",
+              "examples": ["°C", "Pa", "m/s", "V", "A", "%", "Hz"]
+            }
+          },
+          "required": ["type", "value", "unit"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "description": "二进制型数据",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "binary"
+            },
+            "format": {
+              "type": "string",
+              "description": "二进制格式",
+              "enum": ["image/jpeg", "image/png", "audio/wav", "video/mp4", "application/octet-stream"]
+            }
+          },
+          "required": ["type", "data", "format"],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "required": ["id", "source", "name", "dataType"],
+  "additionalProperties": false
+}

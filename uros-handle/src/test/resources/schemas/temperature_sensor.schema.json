@@ -1,11 +1,12 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "../../../main/resources/schemas/resolvable.schema.json",
   "title": "温度传感器",
   "description": "描述一个温度传感器，包括温度值读数和开关接口",
   "type": "object",
   "properties": {
     "id": {
-      "type": "string",
+      "$ref": "../../../main/resources/schemas/resolvable.schema.json#/$defs/uid",
       "description": "传感器唯一标识符"
     },
     "name": {
@@ -60,6 +61,10 @@
           "default": 0
         }
       }
+    },
+    "temperature": {
+      "$ref": "../../../main/resources/schemas/handle.schema.json",
+      "description": "温度数据获取的Handle接口"
     }
   },
   "required": [

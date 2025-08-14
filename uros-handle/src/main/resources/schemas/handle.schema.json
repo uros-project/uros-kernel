@@ -1,0 +1,235 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uros.kernel.com/schemas/handle.schema.json",
+  "title": "Handle Schema",
+  "description": "Schema for UROS Handle objects - URL-based resource identifiers and handlers",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "resolvable.schema.json#/$defs/uid",
+      "description": "Handle唯一标识符"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "资源的URL地址",
+      "pattern": "^https?://[^\\s/$.?#].[^\\s]*$",
+      "examples": [
+        "https://api.uros.com/resources/sensor-001",
+        "http://localhost:8080/api/v1/devices/temp-01",
+        "https://data.uros.com/telemetry/stream/12345"
+      ]
+    },
+    "method": {
+      "type": "string",
+      "description": "HTTP方法",
+      "enum": ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"],
+      "default": "GET"
+    },
+    "headers": {
+      "type": "object",
+      "description": "HTTP请求头",
+      "patternProperties": {
+        "^[a-zA-Z][a-zA-Z0-9-]*$": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "examples": [
+        {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer token123"
+        }
+      ]
+    },
+    "timeout": {
+      "type": "integer",
+      "description": "请求超时时间（毫秒）",
+      "minimum": 100,
+      "maximum": 300000,
+      "default": 30000
+    },
+    "retryPolicy": {
+      "type": "object",
+      "description": "重试策略",
+      "properties": {
+        "maxRetries": {
+          "type": "integer",
+          "description": "最大重试次数",
+          "minimum": 0,
+          "maximum": 10,
+          "default": 3
+        },
+        "retryDelay": {
+          "type": "integer",
+          "description": "重试延迟（毫秒）",
+          "minimum": 100,
+          "maximum": 60000,
+          "default": 1000
+        },
+        "backoffMultiplier": {
+          "type": "number",
+          "description": "退避倍数",
+          "minimum": 1.0,
+          "maximum": 10.0,
+          "default": 2.0
+        }
+      },
+      "additionalProperties": false
+    },
+    "authentication": {
+      "type": "object",
+      "description": "认证信息",
+      "oneOf": [
+        {
+          "type": "object",
+          "description": "Bearer Token认证",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "bearer"
+            },
+            "token": {
+              "type": "string",
+              "description": "访问令牌",
+              "minLength": 1
+            }
+          },
+          "required": ["type", "token"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "description": "Basic认证",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "basic"
+            },
+            "username": {
+              "type": "string",
+              "description": "用户名",
+              "minLength": 1
+            },
+            "password": {
+              "type": "string",
+              "description": "密码",
+              "minLength": 1
+            }
+          },
+          "required": ["type", "username", "password"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "description": "API Key认证",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "apikey"
+            },
+            "key": {
+              "type": "string",
+              "description": "API密钥",
+              "minLength": 1
+            },
+            "header": {
+              "type": "string",
+              "description": "API密钥头名称",
+              "default": "X-API-Key"
+            }
+          },
+          "required": ["type", "key"],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "metadata": {
+      "type": "object",
+      "description": "元数据信息",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Handle名称",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "description": {
+          "type": "string",
+          "description": "Handle描述",
+          "maxLength": 1000
+        },
+        "tags": {
+          "type": "array",
+          "description": "标签列表",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 50
+          },
+          "uniqueItems": true,
+          "maxItems": 20
+        },
+        "version": {
+          "type": "string",
+          "description": "Handle版本",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "examples": ["1.0.0", "2.1.3"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "更新时间"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": ["id", "url"],
+  "additionalProperties": false,
+  "examples": [
+    {
+      "id": "handle-api-001",
+      "url": "https://api.uros.com/sensors/temperature",
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "timeout": 5000,
+      "metadata": {
+        "name": "温度传感器API",
+        "description": "获取温度传感器数据的API接口",
+        "tags": ["sensor", "temperature", "api"],
+        "version": "1.0.0"
+      }
+    },
+    {
+      "id": "handle-webhook-001",
+      "url": "https://webhook.uros.com/events",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "authentication": {
+        "type": "bearer",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+      },
+      "retryPolicy": {
+        "maxRetries": 3,
+        "retryDelay": 1000,
+        "backoffMultiplier": 2.0
+      },
+      "metadata": {
+        "name": "事件Webhook",
+        "description": "处理系统事件的Webhook接口",
+        "tags": ["webhook", "events"],
+        "version": "1.2.0"
+      }
+    }
+  ]
+}
